@@ -1,16 +1,30 @@
 import React, { Component, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Timeline, Button, Modal } from 'antd';
 
 import ProductionCard from '../ProductionCard';
+import RecordList from '../../Records/RecordList';
 import { fetchProduction, deleteProduction } from '../../../actions/productions';
+import { deleteRecord, fetchRecordList } from '../../../actions/records';
+import { getProducts, getMaterials } from '../../../reducers/recordsReducer';
+import { getProductionItems } from '../../../reducers/productionsReducer';
+import routes from '../../../constants/routes';
 import './Productions.scss';
 
-class EditProduction extends Component {
+class Production extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            productionId: props.match.params.id,
+        };
+    }
 
     componentDidMount() {
-        this.props.fetchProduction(this.props.match.params.id);
+        this.props.fetchProduction(this.state.productionId);
+        this.props.fetchRecordList(`?productionId=${this.state.productionId}`);
     }
 
     showDeleteConfirm = ({ id, title }) => (
@@ -27,6 +41,42 @@ class EditProduction extends Component {
         })
     );
 
+    onDeleteRecord = (id) => {
+        this.props.deleteRecord(
+            id,
+            `${routes.production}${this.state.productionId}`
+        );
+    };
+
+    renderProducts = () => {
+        const { products } = this.props;
+
+        if (products.length) {
+
+            return (
+                <RecordList
+                    records={products}
+                    deleteRecord={this.onDeleteRecord}
+                />
+            )
+        }
+
+        return null;
+    };
+
+    renderMaterials = () => {
+        const { materials } = this.props;
+
+        if (materials.length) {
+            return (
+                <RecordList
+                    records={materials}
+                    deleteRecord={this.onDeleteRecord}
+                />
+            )
+        }
+    };
+
     render() {
         const { production } = this.props;
         if (!production) {
@@ -35,13 +85,11 @@ class EditProduction extends Component {
 
         return (
             <Fragment>
-                <ProductionCard production={production}/>
-                <Timeline>
-                    <Timeline.Item>Create a services site 2015-09-01</Timeline.Item>
-                    <Timeline.Item>Solve initial network problems 2015-09-01</Timeline.Item>
-                    <Timeline.Item>Technical testing 2015-09-01</Timeline.Item>
-                    <Timeline.Item>Network problems being solved 2015-09-01</Timeline.Item>
-                </Timeline>
+                <Link to={routes.createRecord}>Добавить запись</Link>
+                <ProductionCard production={production}>
+                    {this.renderProducts()}
+                    {this.renderMaterials()}
+                </ProductionCard>
                 <Button
                     type="primary"
                     danger
@@ -57,7 +105,14 @@ class EditProduction extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         production: state.productions[ownProps.match.params.id],
+        products: getProductionItems(getProducts(state.records), ownProps.match.params.id),
+        materials: getProductionItems(getMaterials(state.records), ownProps.match.params.id),
     };
 };
 
-export default connect(mapStateToProps, { fetchProduction, deleteProduction })(EditProduction);
+export default connect(mapStateToProps, {
+    fetchProduction,
+    deleteProduction,
+    fetchRecordList,
+    deleteRecord,
+})(Production);

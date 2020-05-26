@@ -16,12 +16,12 @@ export const fetchRecord = id => async dispatch => {
 };
 
 export const CREATE_RECORD = 'CREATE_RECORD' ;
-export const createRecord = formValues => async dispatch => {
-    const response = await records.post('/', {...formValues });
+export const createRecord = (formValues, route) => async dispatch => {
+    const response = await records.post('/', { ...formValues });
 
     dispatch({ type: CREATE_RECORD, payload: response.data });
 
-    history.push(routes.records);
+    history.push(route);
 };
 
 

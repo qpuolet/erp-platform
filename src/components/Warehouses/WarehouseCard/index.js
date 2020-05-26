@@ -6,7 +6,7 @@ import { Card } from 'antd';
 import routes from '../../../constants/routes/warehouses';
 import './WarehouseCard.scss';
 
-export default class EventCard extends Component {
+export default class WarehouseCard extends Component {
     static propTypes = {
         warehouse: PropTypes.shape({
             title: PropTypes.string,

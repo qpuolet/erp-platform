@@ -6,8 +6,9 @@ import {
     DELETE_RECORD,
 } from '../actions/records';
 import { omit } from 'lodash';
-import {FETCH_PRODUCT} from "../actions/products";
-import {FETCH_MATERIAL} from "../actions/materials";
+import {FETCH_PRODUCT} from '../actions/products';
+import {FETCH_MATERIAL} from '../actions/materials';
+import { PRODUCTS, MATERIALS, WAREHOUSE, PRODUCTION } from '../constants';
 
 export default (state = {}, action) => {
     switch (action.type) {
@@ -30,8 +31,35 @@ export default (state = {}, action) => {
     }
 }
 
-export const mapFormValues = formValues => {
-    return formValues;
+export const mapFormValues = (formValues, item, itemType, location, locationType) => {
+    let locations = {};
+    let ids = {
+        productId: null,
+        rawMaterialId: null,
+    };
+
+    if (itemType === MATERIALS) {
+        ids.rawMaterialId = formValues.itemId;
+    }
+    if (itemType === PRODUCTS) {
+        ids.productId = formValues.itemId;
+        ids.rawMaterialId = item.rawMaterialId;
+    }
+    if (locationType === PRODUCTION) {
+        locations.productionId = location.id;
+    }
+    if (locationType === WAREHOUSE) {
+        locations.warehouseId = location.id;
+    }
+
+    return {
+        ...ids,
+        ...locations,
+        quantity: formValues.quantity,
+        packing: formValues.packing,
+        units: 'GRAND',
+        status: formValues.statusType,
+    };
 };
 
 export const getProducts = records => Object.values(records).filter(record => record.productId);

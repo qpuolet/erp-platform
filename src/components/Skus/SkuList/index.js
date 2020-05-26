@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Table, Modal, Button } from 'antd';
 import { ExclamationCircleOutlined, EditOutlined } from '@ant-design/icons';
+import { get } from 'lodash';
 
 export default class SkuList extends Component {
     static propTypes = {
@@ -29,7 +30,7 @@ export default class SkuList extends Component {
             },
             {
                 title: 'Количество',
-                dataIndex: 'count',
+                dataIndex: 'quantity',
             },
         ];
 
@@ -89,10 +90,10 @@ export default class SkuList extends Component {
         return this.props.skus.map((sku, idx) => {
             return {
                 key: idx,
-                number: idx + 1         ,
+                number: idx + 1,
                 name: sku.title,
-                packing: sku.packing,
-                quantity: sku.quantity || '-',
+                packing: get(sku, 'packing', '').join(', '),
+                quantity: sku.quantity,
                 id: sku.id,
             };
         });

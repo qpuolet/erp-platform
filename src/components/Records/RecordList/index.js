@@ -2,19 +2,16 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Table, Modal, Button } from 'antd';
-import { ExclamationCircleOutlined, EditOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined, EditOutlined, CloseOutlined } from '@ant-design/icons';
 
 import routes from '../../../constants/routes/records';
+import { STATUS_TYPES } from '../../../constants';
 
 export default class RecordList extends Component {
     static propTypes = {
         deleteRecord: PropTypes.func,
         records: PropTypes.array,
     };
-
-    constructor(props) {
-        super(props);
-    }
 
     getColumns() {
         return [
@@ -32,21 +29,11 @@ export default class RecordList extends Component {
             },
             {
                 title: 'Количество',
-                dataIndex: 'count',
+                dataIndex: 'quantity',
             },
             {
-                title: '',
-                dataIndex: '',
-                key: 'remove',
-                render: ({ id }) => {
-                    return (
-                        <span
-                            onClick={this.showDeleteConfirm.bind(null, id)}
-                        >
-                            Удалить
-                        </span>
-                    );
-                }
+                title: 'Статус',
+                dataIndex: 'status',
             },
             {
                 title: '',
@@ -57,6 +44,20 @@ export default class RecordList extends Component {
                         <Link to={`${routes.editRecord}${id}`}>
                             <EditOutlined/>
                         </Link>
+                    );
+                }
+            },
+            {
+                title: '',
+                dataIndex: '',
+                key: 'remove',
+                render: ({ id }) => {
+                    return (
+                        <span
+                            onClick={this.showDeleteConfirm.bind(null, id)}
+                        >
+                            <CloseOutlined />
+                        </span>
                     );
                 }
             },
@@ -88,6 +89,7 @@ export default class RecordList extends Component {
                 name: <Link to={`${routes.records}${record.id}`}>{record.title}</Link>,
                 packing: record.packing,
                 quantity: record.quantity || '-',
+                status: STATUS_TYPES[record.status].title,
                 id: record.id,
             };
         });

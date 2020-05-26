@@ -6,7 +6,7 @@ import { Card } from 'antd';
 import routes from '../../../constants/routes/productions';
 import './ProductionCard.scss';
 
-export default class EventCard extends Component {
+export default class ProductionCard extends Component {
     static propTypes = {
         production: PropTypes.shape({
             title: PropTypes.string,
@@ -25,7 +25,9 @@ export default class EventCard extends Component {
                 type="inner"
                 title={title}
                 extra={this.props.showMoreLink ? this.showMoreLink(id) : null}
-            />
+            >
+                {this.props.children}
+            </Card>
         );
     }
 }

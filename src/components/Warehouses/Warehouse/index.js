@@ -6,14 +6,15 @@ import { Timeline, Button, Modal } from 'antd';
 import { get } from 'lodash';
 
 import WarehouseCard from '../WarehouseCard';
+import RecordList from '../../Records/RecordList';
 import { fetchWarehouse, deleteWarehouse } from '../../../actions/warehouses';
 import { fetchRecordList, deleteRecord } from '../../../actions/records';
-import './Warehouse.scss';
-import RecordList from '../../Records/RecordList';
-import routes from '../../../constants/routes';
 import { getProducts, getMaterials } from '../../../reducers/recordsReducer';
+import { getWarehouseItems } from '../../../reducers/warehousesReducer';
+import routes from '../../../constants/routes';
+import './Warehouse.scss';
 
-class EditWarehouse extends Component {
+class Warehouse extends Component {
 
     constructor(props) {
         super(props);
@@ -42,11 +43,13 @@ class EditWarehouse extends Component {
     );
 
     onDeleteRecord = (id) => {
-        this.props.deleteRecord(id, `${routes.warehouse}${this.state.warehouseId}`);
+        this.props.deleteRecord(
+            id,
+            `${routes.warehouse}${this.state.warehouseId}`
+        );
     };
 
     renderProducts = () => {
-        debugger;
         const { products } = this.props;
 
         if (products.length) {
@@ -62,7 +65,6 @@ class EditWarehouse extends Component {
     };
 
     renderMaterials = () => {
-        debugger;
         const { materials } = this.props;
 
         if (materials.length) {
@@ -100,17 +102,15 @@ class EditWarehouse extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        warehouse: state.warehouses[ownProps.match.params.id],
-        products: getProducts(state.records),
-        materials: getMaterials(state.records),
-    };
-};
+const mapStateToProps = (state, ownProps) => ({
+    warehouse: state.warehouses[ownProps.match.params.id],
+    products: getWarehouseItems(getProducts(state.records), ownProps.match.params.id),
+    materials: getWarehouseItems(getMaterials(state.records), ownProps.match.params.id),
+});
 
 export default connect(mapStateToProps, {
     fetchWarehouse,
     deleteWarehouse,
     fetchRecordList,
     deleteRecord,
-})(EditWarehouse);
+})(Warehouse);

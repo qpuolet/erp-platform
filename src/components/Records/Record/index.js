@@ -22,7 +22,6 @@ class Record extends Component {
     }
 
     render() {
-        debugger;
         const record = this.props.records[this.props.match.params.id];
 
         if (!record) {

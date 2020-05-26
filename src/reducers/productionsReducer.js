@@ -30,3 +30,7 @@ export default (state = {}, action) => {
 export const mapFormValues = formValues => {
     return formValues;
 };
+
+export const getProductionItems = (items, productionId) =>
+    items.filter(item => item.productionId === productionId);
+
