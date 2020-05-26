@@ -85,7 +85,6 @@ class Production extends Component {
 
         return (
             <Fragment>
-                <Link to={routes.createRecord}>Добавить запись</Link>
                 <ProductionCard production={production}>
                     {this.renderProducts()}
                     {this.renderMaterials()}

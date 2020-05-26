@@ -147,6 +147,11 @@ export default class SideMenu extends Component {
                             </Link>
                         </Menu.Item>
                     </SubMenu>
+                    <Menu.Item key="15">
+                        <Link to={routes.createRecord}>
+                            <span>Добавить запись</span>
+                        </Link>
+                    </Menu.Item>
                 </Menu>
             </Layout.Sider>
         );

@@ -85,7 +85,6 @@ class Warehouse extends Component {
 
         return (
             <Fragment>
-                <Link to={routes.createRecord}>Добавить запись</Link>
                 <WarehouseCard warehouse={warehouse}>
                     {this.renderProducts()}
                     {this.renderMaterials()}
