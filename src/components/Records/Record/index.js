@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Card } from 'antd';
 
 
-import { fetchRecordList, editRecord, deleteRecord } from '../../../actions/records';
+import { fetchRecordList, deleteRecord } from '../../../actions/records';
 import RecordCard from '../RecordCard';
 
 class Record extends Component {
@@ -13,7 +13,6 @@ class Record extends Component {
     static propTypes = {
         record: PropTypes.object,
         fetchRecordList: PropTypes.func,
-        editRecord: PropTypes.func,
         deleteRecord: PropTypes.func,
     };
 
@@ -49,7 +48,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
     bindActionCreators({
         fetchRecordList,
-        editRecord,
         deleteRecord,
     }, dispatch);
 

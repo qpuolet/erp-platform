@@ -27,7 +27,6 @@ import CreateUser from './Users/CreateUser';
 import User from './Users/User';
 import EditUser from './Users/EditUser';
 import Record from './Records/Record';
-import EditRecord from './Records/EditRecord';
 import CreateRecord from './Records/CreateRecord';
 import SideMenu from './SideMenu';
 import routes from '../constants/routes';
@@ -69,7 +68,6 @@ export default function App() {
                                 <PrivateRoute path={`${routes.editUser}:id`} component={EditUser}/>
                                 <PrivateRoute path={`${routes.records}:id`} component={Record}/>
                                 <PrivateRoute path={`${routes.createRecord}`} component={CreateRecord}/>
-                                <PrivateRoute path={`${routes.editRecord}:id`} component={EditRecord}/>
                             </Switch>
                         </div>
                     </Content>

@@ -38,18 +38,6 @@ export default class RecordList extends Component {
             {
                 title: '',
                 dataIndex: '',
-                key: 'edit',
-                render: ({ id }) => {
-                    return (
-                        <Link to={`${routes.editRecord}${id}`}>
-                            <EditOutlined/>
-                        </Link>
-                    );
-                }
-            },
-            {
-                title: '',
-                dataIndex: '',
                 key: 'remove',
                 render: ({ id }) => {
                     return (

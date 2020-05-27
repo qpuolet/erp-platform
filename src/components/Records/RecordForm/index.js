@@ -75,7 +75,7 @@ class RecordForm extends Component {
             case MATERIALS:
                 return (
                     <div>
-                        <label>Выберите товар</label>
+                        <label>Выберите сырьё</label>
                         <Field
                             onChange={e => this.props.onItemSelect(e)}
                             name="itemId"

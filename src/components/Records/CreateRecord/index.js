@@ -16,7 +16,6 @@ import { PRODUCTS, MATERIALS, WAREHOUSE, PRODUCTION } from '../../../constants';
 class CreateRecord extends Component {
 
     static propTypes = {
-        header: PropTypes.string,
         createRecord: PropTypes.func,
         fetchProductList: PropTypes.func,
         fetchMaterialList: PropTypes.func,

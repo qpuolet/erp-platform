@@ -32,8 +32,6 @@ class EditProduct extends React.Component {
             />
         )
     }
-
-
 }
 
 const mapStateToProps = (state, ownProps) => {
