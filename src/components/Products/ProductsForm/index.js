@@ -83,6 +83,7 @@ class ProductForm extends React.Component {
                     component={this.renderSelectField}
                     label="Выберете сырьё"
                 >
+                    <option />
                     {materials.map((material) => <option value={material.id} selected={material.id===rawMaterialId}>{material.title}</option>)}
                 </Field>
                 <button className="ui button primary">Submit</button>

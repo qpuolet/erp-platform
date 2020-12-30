@@ -81,7 +81,8 @@ class TaskForm extends React.Component {
                         label="Выберете адресата"
                         value={{value: {userId}, label: 'assignedUserId'}}
                     >
-                        {users.map((user) => <option value={user.id} selected={user.id===userId}>{user.username}</option>)}
+                        <option />
+                        {users.map((user) => <option value={user.id}>{user.username}</option>)}
                     </Field>
                 ]}
                 <Field

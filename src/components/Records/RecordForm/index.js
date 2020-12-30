@@ -153,6 +153,7 @@ class RecordForm extends Component {
                 component="select"
                 value={this.props.initialValues.statusType}
             >
+                <option />
                 {statusTypes.map(({ title, value }, idx) => (
                     <option
                         key={idx}

@@ -18,5 +18,9 @@ export const signIn = formValues => async dispatch => {
                 dispatch({ type: SIGN_IN, payload: success.data });
                 history.push(`${routes.user}${success.data.user.id}`);
             }
+        })
+        .catch(function (error) {
+            alert(error.response.status + " " + (error.response.data ? error.response.data.message:""))
+
         });
 };

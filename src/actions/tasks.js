@@ -42,6 +42,7 @@ export const fetchTask = id => async dispatch => {
             if (error.response.status === 401) {
                 history.push(users.login);
             }
+            alert(error.response.status + " " + (error.response.data ? error.response.data.message:""))
         });
 };
 
@@ -56,6 +57,7 @@ export const createTask = formValues => async dispatch => {
             if (error.response.status === 401) {
                 history.push(users.login);
             }
+            alert(error.response.status + " " + (error.response.data ? error.response.data.message:""))
         });
 };
 
@@ -71,6 +73,7 @@ export const editTask = (id, formValues) => async dispatch => {
             if (error.response.status === 401) {
                 history.push(users.login);
             }
+            alert(error.response.status + " " + (error.response.data ? error.response.data.message:""))
         });
 };
 
@@ -85,6 +88,7 @@ export const editTaskStatus = (id, status) => async dispatch => {
             if (error.response.status === 401) {
                 history.push(users.login);
             }
+            alert(error.response.status + " " + (error.response.data ? error.response.data.message:""))
         });
 };
 
@@ -99,5 +103,6 @@ export const deleteTask = id => async dispatch => {
             if (error.response.status === 401) {
                 history.push(users.login);
             }
+            alert(error.response.status + " " + (error.response.data ? error.response.data.message:""))
         });
 };

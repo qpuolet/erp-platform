@@ -10,10 +10,11 @@ export const fetchProductList = () => async dispatch => {
             dispatch({ type: FETCH_PRODUCT_LIST, payload: response.data});
         })
         .catch(function (error) {
-            debugger;
-           // if (error.response.status === 401) {
-           //  history.push(users.login);
-           // }
+            if (error.response.status === 401) {
+                history.push(users.login);
+            }
+            alert(error.response.status + " " + (error.response.data ? error.response.data.message:""))
+
         });
 };
 
@@ -27,6 +28,7 @@ export const fetchProduct = id => async dispatch => {
             if (error.response.status === 401) {
                 history.push(users.login);
             }
+            alert(error.response.status + " " + (error.response.data ? error.response.data.message:""))
         });
 };
 
@@ -41,6 +43,7 @@ export const createProduct = formValues => async dispatch => {
             if (error.response.status === 401) {
                 history.push(users.login);
             }
+            alert(error.response.status + " " + (error.response.data ? error.response.data.message:""))
         });
 };
 
@@ -56,6 +59,7 @@ export const editProduct = (id, formValues) => async dispatch => {
             if (error.response.status === 401) {
                 history.push(users.login);
             }
+            alert(error.response.status + " " + (error.response.data ? error.response.data.message:""))
         });
 };
 
@@ -70,5 +74,6 @@ export const deleteProduct = id => async dispatch => {
             if (error.response.status === 401) {
                 history.push(users.login);
             }
+            alert(error.response.status + " " + (error.response.data ? error.response.data.message:""))
         });
 };
