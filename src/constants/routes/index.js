@@ -5,6 +5,7 @@ import products from './products';
 import records from './records';
 import events from './events';
 import users from './users';
+import tasks from './tasks';
 
 export default {
     login: '/login',
@@ -15,4 +16,5 @@ export default {
     ...records,
     ...events,
     ...users,
+    ...tasks,
 };

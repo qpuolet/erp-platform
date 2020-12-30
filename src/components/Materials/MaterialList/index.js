@@ -31,6 +31,7 @@ class ProductList extends Component {
                 routes={this.routes}
                 deleteSku={deleteMaterial}
                 skus={materials}
+                roles={this.props.roles}
             />
         );
     }
@@ -39,6 +40,7 @@ class ProductList extends Component {
 const mapStateToProps = state => {
     return {
         materials: Object.values(state.materials),
+        roles: state.auth.roles,
     };
 };
 

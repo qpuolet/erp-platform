@@ -1,6 +1,5 @@
-import React, { Fragment, Component } from 'react';
+import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { Layout } from 'antd';
 import 'antd/dist/antd.css';
 
@@ -9,10 +8,12 @@ import PrivateRoute from './PrivateRoute';
 import LogIn from './Auth/LogIn';
 import WarehouseList from './Warehouses/WarehouseList';
 import CreateWarehouse from './Warehouses/CreateWarehouse';
+import EditWarehouse from './Warehouses/EditWarehouse';
 import Warehouse from './Warehouses/Warehouse';
 import ProductionList from './Productions/ProductionList';
 import CreateProduction from './Productions/CreateProduction';
 import Production from './Productions/Production';
+import EditProduction from './Productions/EditProduction';
 import ProductList from './Products/ProductList';
 import CreateProduct from './Products/CreateProduct';
 import EditProduct from './Products/EditProduct';
@@ -24,19 +25,23 @@ import CreateEvent from './Events/CreateEvent';
 import Event from './Events/Event';
 import UserList from './Users/UserList';
 import CreateUser from './Users/CreateUser';
-import User from './Users/User';
 import EditUser from './Users/EditUser';
+import EditUserPassword from './Users/EditUserPassword';
 import Record from './Records/Record';
 import CreateRecord from './Records/CreateRecord';
+import TransferRecord from './Records/TransferRecord';
 import SideMenu from './SideMenu';
 import routes from '../constants/routes';
-import { getJWT } from '../core/utils/auth';
+import TaskList from './Tasks/TaskList';
+import CreatedTaskList from './Tasks/CreatedTaskList';
+import EditTask from './Tasks/EditTask';
+import CreateTask from './Tasks/CreateTask';
 import './App.scss';
-import mapDispatchToProps from "react-redux/es/connect/mapDispatchToProps";
 
 const { Header, Content } = Layout;
 
 export default function App() {
+
     return (
         <Layout style={{minHeight: '100vh'}}>
             <Router history={history}>
@@ -65,9 +70,19 @@ export default function App() {
                                 <PrivateRoute path={`${routes.event}:id`} component={Event}/>
                                 <PrivateRoute path={routes.users} component={UserList}/>
                                 <PrivateRoute path={routes.createUser} component={CreateUser}/>
+                                <PrivateRoute path={routes.editUserPassword} component={EditUserPassword}/>
                                 <PrivateRoute path={`${routes.editUser}:id`} component={EditUser}/>
                                 <PrivateRoute path={`${routes.records}:id`} component={Record}/>
                                 <PrivateRoute path={`${routes.createRecord}`} component={CreateRecord}/>
+                                <PrivateRoute path={`${routes.transferRecord}:id`} component={TransferRecord}/>
+                                <Route path={routes.login} component={LogIn}/>
+                                <PrivateRoute path={`${routes.editProduction}:id`} component={EditProduction}/>
+                                <PrivateRoute path={`${routes.editWarehouse}:id`} component={EditWarehouse}/>
+                                <PrivateRoute path={`${routes.editWarehouse}:id`} component={EditWarehouse}/>
+                                <PrivateRoute path={`${routes.editTask}:id`} component={EditTask}/>
+                                <PrivateRoute path={routes.createTask} component={CreateTask}/>
+                                <PrivateRoute path={routes.tasks} component={TaskList}/>
+                                <PrivateRoute path={routes.createdTasks} component={CreatedTaskList}/>
                             </Switch>
                         </div>
                     </Content>

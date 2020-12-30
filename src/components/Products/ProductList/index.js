@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import SkuList from '../../Skus/SkuList';
 
 import {
     fetchProductList,
+	deleteProduct
 } from '../../../actions/products';
 import routes from '../../../constants/routes/products';
-import SkuList from '../../Skus/SkuList';
 import './ProductList.scss';
 
 class ProductList extends Component {
@@ -17,16 +18,19 @@ class ProductList extends Component {
 
     get routes() {
         return {
+          editSku: routes.editProduct,
           createSku: routes.createProduct,
         };
     }
 
     render() {
-        const { products } = this.props;
+        const {deleteProduct, products } = this.props;
         return (
             <SkuList
                 routes={this.routes}
+				deleteSku={deleteProduct}
                 skus={products}
+                roles={this.props.roles}
             />
         );
     }
@@ -35,12 +39,14 @@ class ProductList extends Component {
 const mapStateToProps = state => {
     return {
         products: Object.values(state.products),
+        roles: state.auth.roles,
     };
 };
 
 const mapDispatchToProps = dispatch =>
     bindActionCreators({
         fetchProductList,
+		deleteProduct,
     }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductList);

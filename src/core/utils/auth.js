@@ -7,3 +7,7 @@ export const getJWT = () => {
 export const setJWT = jwt => {
   return cookies.set('authToken', jwt);
 };
+
+export const deleteJWT = () => {
+  return cookies.remove('authToken');
+};

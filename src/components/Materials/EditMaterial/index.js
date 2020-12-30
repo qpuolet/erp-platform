@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { fetchMaterial, editMaterial } from '../../../actions/materials';
 import { mapFormValues } from '../../../reducers/skuReducer';
-import EditSku from '../../Skus/EditSku';
+import MaterialForm from "../MaterialsForm";
 
 class EditMaterial extends React.Component {
 
@@ -22,15 +22,20 @@ class EditMaterial extends React.Component {
         if (!this.props.material) {
             return null;
         }
-        const { title, packing } = this.props.material;
+        const { title, packing, header } = this.props.material;
 
         return (
-            <EditSku
-                title={title}
-                packing={packing}
-                onSubmit={this.onSubmit}
-            />
-        )
+            <div>
+                <h3>{header}</h3>
+                <MaterialForm
+                    onSubmit={this.onSubmit}
+                    initialValues={{
+                        title,
+                        packing: packing.join(', ')
+                    }}
+                />
+            </div>
+        );
     }
 
 

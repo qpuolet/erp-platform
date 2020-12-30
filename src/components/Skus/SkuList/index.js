@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Table, Modal, Button } from 'antd';
+import { Table, Modal } from 'antd';
 import { ExclamationCircleOutlined, EditOutlined } from '@ant-design/icons';
 import { get } from 'lodash';
 
@@ -10,8 +10,7 @@ export default class SkuList extends Component {
         routes: PropTypes.object,
         deleteSku: PropTypes.func,
         skus: PropTypes.array,
-        enableDeleteSku: PropTypes.bool,
-        enableEditSku: PropTypes.bool,
+        roles: PropTypes.array,
     };
 
     getColumns() {
@@ -27,14 +26,9 @@ export default class SkuList extends Component {
             {
                 title: 'Фасовка',
                 dataIndex: 'packing',
-            },
-            {
-                title: 'Количество',
-                dataIndex: 'quantity',
-            },
+            }
         ];
-
-        if (this.props.enableDeleteSku) {
+        this.props.roles.some(role => "ROLE_MODERATOR" === role || "ROLE_ADMIN" === role) && (
             columns.push({
                 title: '',
                 dataIndex: '',
@@ -48,10 +42,8 @@ export default class SkuList extends Component {
                             </span>
                     );
                 }
-            });
-        }
-
-        if (this.props.enableEditSku) {
+            }))
+        this.props.roles.some(role => "ROLE_MODERATOR" === role || "ROLE_ADMIN" === role) && (
             columns.push({
                 title: '',
                 dataIndex: '',
@@ -63,20 +55,19 @@ export default class SkuList extends Component {
                         </Link>
                     );
                 }
-            });
-        }
+            }))
 
         return columns;
     }
 
     showDeleteConfirm = id => (
         Modal.confirm({
-            title: 'Are you sure delete this task?',
+            title: 'Вы уверены, что хотите удалить?',
             icon: <ExclamationCircleOutlined />,
             content: 'Some descriptions',
-            okText: 'Yes',
+            okText: 'Да',
             okType: 'danger',
-            cancelText: 'No',
+            cancelText: 'Нет',
             onOk: () => {
                 this.props.deleteSku(id);
             },

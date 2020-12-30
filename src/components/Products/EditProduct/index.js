@@ -2,12 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { fetchProduct, editProduct } from '../../../actions/products';
-import { mapFormValues } from '../../../reducers/skuReducer';
-import EditSku from '../../Skus/EditSku';
+import { fetchMaterialList } from '../../../actions/materials';
+import { mapFormValues } from '../../../reducers/productsReducer';
+import ProductForm from "../ProductsForm";
 
 class EditProduct extends React.Component {
 
     componentDidMount() {
+        this.props.fetchMaterialList();
         this.props.fetchProduct(this.props.match.params.id);
     }
 
@@ -22,22 +24,31 @@ class EditProduct extends React.Component {
         if (!this.props.product) {
             return null;
         }
-        const { title, packing } = this.props.product;
+        const { title, packing, rawMaterialId} = this.props.product;
+        const {materials} = this.props;
 
         return (
-            <EditSku
-                title={title}
-                packing={packing}
-                onSubmit={this.onSubmit}
-            />
-        )
+            <div>
+                <h3>"Изменить данные товара"</h3>
+                <ProductForm
+                    onSubmit={this.onSubmit}
+                    materials={materials}
+                    initialValues={{
+                        title,
+                        packing: packing.join(', '),
+                        rawMaterialId
+                    }}
+                />
+            </div>
+        );
     }
 }
 
 const mapStateToProps = (state, ownProps) => {
     return {
         product: state.products[ownProps.match.params.id],
+        materials: Object.values(state.materials)
     };
 };
 
-export default connect(mapStateToProps, { fetchProduct, editProduct })(EditProduct);
+export default connect(mapStateToProps, { fetchProduct, editProduct, fetchMaterialList })(EditProduct);

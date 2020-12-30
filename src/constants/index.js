@@ -43,3 +43,17 @@ export const STATUS_TYPES = {
         value: WAITING
     },
 };
+
+const GRAND = 'GRAND';
+const KILOGRAM = 'KILOGRAM';
+
+export const UNITS_TYPES = {
+    [GRAND]: {
+        title: 'Шт',
+        value: GRAND
+    },
+    [KILOGRAM]: {
+        title: 'Кг',
+        value: KILOGRAM
+    }
+};

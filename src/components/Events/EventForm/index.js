@@ -46,7 +46,7 @@ class EventForm extends React.Component {
 
     render() {
         const { handleSubmit } = this.props;
-        const { name, title, place, quantity, comment } = this.props.initialValues;
+        const { name, title, place, quantity } = this.props.initialValues;
 
         return (
             <form

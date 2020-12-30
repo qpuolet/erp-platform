@@ -2,10 +2,10 @@ import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Table } from "antd";
-import { EditOutlined } from '@ant-design/icons';
+import { Table, Modal } from 'antd';
+import { ExclamationCircleOutlined, EditOutlined } from '@ant-design/icons';
 
-import { fetchUserList } from '../../../actions/users';
+import { fetchUserList,deleteUser } from '../../../actions/users';
 import routes from '../../../constants/routes/users';
 import './UserList.scss';
 
@@ -27,8 +27,22 @@ class UserList extends Component {
                     dataIndex: 'name',
                 },
                 {
-                    title: 'Статус',
-                    dataIndex: 'packing',
+                    title: 'Email',
+                    dataIndex: 'email',
+                },
+                {
+                    title: '',
+                    dataIndex: '',
+                    key: 'delete',
+                    render: ({ id }) => {
+                        return (
+                            <span
+                                onClick={this.showDeleteConfirm.bind(null, id)}
+                            >
+                                Удалить
+                            </span>
+                        );
+                    }
                 },
                 {
                     title: '',
@@ -45,6 +59,22 @@ class UserList extends Component {
             ]
         );
     }
+    showDeleteConfirm = id => (
+        Modal.confirm({
+            title: 'Вы уверены, что хотите удалить пользователя?',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Some descriptions',
+            okText: 'Да',
+            okType: 'danger',
+            cancelText: 'Нет',
+            onOk: () => {
+                this.props.deleteUser(id);
+            },
+            onCancel() {
+                console.log('Cancel');
+            },
+        })
+    );
 
     get usersData() {
         return this.props.users.map((user, idx) => {
@@ -54,6 +84,7 @@ class UserList extends Component {
                 name: (
                     <Link to={`${routes.user}${user.id}`}>{user.username}</Link>
                 ),
+				email: user.email,
                 id: user.id,
             };
         });
@@ -66,7 +97,7 @@ class UserList extends Component {
     render() {
         return (
             <Fragment>
-                <h3>Список пользователей</h3>
+                <h3>Список всех пользователей</h3>
                 {this.renderTable()}
             </Fragment>
         );
@@ -82,6 +113,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch =>
     bindActionCreators({
         fetchUserList,
+        deleteUser
     }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserList);

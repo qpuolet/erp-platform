@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { fetchUser, editUser } from '../../../actions/users';
-import { mapFormValues } from '../../../reducers/skuReducer';
+import { mapRestrictedFormValues } from '../../../reducers/usersReducer';
 import UserForm from '../UserForm';
 
 class EditUser extends React.Component {
@@ -14,7 +14,7 @@ class EditUser extends React.Component {
     onSubmit = formValues => {
         this.props.editUser(
             this.props.match.params.id,
-            mapFormValues(formValues)
+            mapRestrictedFormValues(formValues)
         );
     };
 
@@ -22,14 +22,15 @@ class EditUser extends React.Component {
         if (!this.props.user) {
             return null;
         }
-        const { username, email, password } = this.props.user;
+        const { username, email, roles } = this.props.user;
 
         return (
             <UserForm
+                onSubmit={this.onSubmit}
                 initialValues={{
                     username,
                     email,
-                    password,
+                    roles: roles.join(', '),
                 }}
             />
         )

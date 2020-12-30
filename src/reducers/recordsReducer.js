@@ -6,8 +6,6 @@ import {
     DELETE_RECORD,
 } from '../actions/records';
 import { omit } from 'lodash';
-import {FETCH_PRODUCT} from '../actions/products';
-import {FETCH_MATERIAL} from '../actions/materials';
 import { PRODUCTS, MATERIALS, WAREHOUSE, PRODUCTION } from '../constants';
 
 export default (state = {}, action) => {
@@ -57,8 +55,38 @@ export const mapFormValues = (formValues, item, itemType, location, locationType
         ...locations,
         quantity: formValues.quantity,
         packing: formValues.packing,
-        units: 'GRAND',
+        units: formValues.packing ? 'GRAND' : 'KILOGRAM',
         status: formValues.statusType,
+    };
+};
+
+export const mapUpdatedFormValues = ({ packing, quantity = '' }) => {
+    return {
+        packing,
+        quantity,
+    }
+};
+
+export const mapOnChangeFormValues = (formValues, status) => {
+    return {
+        id:formValues.id,
+        rawMaterialId:formValues.rawMaterialId,
+        packing:formValues.packing,
+        quantity:formValues.quantity,
+        units:formValues.units,
+        warehouseId:formValues.warehouseId,
+        productId:formValues.productId,
+        productionId:formValues.productionId,
+        status: status,
+        total: null,
+        title: null
+    };
+};
+
+export const mapTransferFormValues = (formValues, quantity) => {
+    return {
+        ...formValues,
+        quantity:quantity,
     };
 };
 

@@ -1,15 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { Timeline, Button, Modal } from 'antd';
-import { get } from 'lodash';
 
 import WarehouseCard from '../WarehouseCard';
 import RecordList from '../../Records/RecordList';
 import { fetchWarehouse, deleteWarehouse } from '../../../actions/warehouses';
-import { fetchRecordList, deleteRecord } from '../../../actions/records';
-import { getProducts, getMaterials } from '../../../reducers/recordsReducer';
+import {fetchRecordList, deleteRecord, editRecord, createRecord} from '../../../actions/records';
+import {getProducts, getMaterials, mapUpdatedFormValues, mapOnChangeFormValues} from '../../../reducers/recordsReducer';
 import { getWarehouseItems } from '../../../reducers/warehousesReducer';
 import routes from '../../../constants/routes';
 import './Warehouse.scss';
@@ -28,23 +24,24 @@ class Warehouse extends Component {
         this.props.fetchRecordList(`?warehouseId=${this.state.warehouseId}`);
     }
 
-    showDeleteConfirm = ({ id, title }) => (
-        Modal.confirm({
-            title: `Удалить склад ${'\u00AB'}${title}${'\u00BB'}`,
-            icon: <ExclamationCircleOutlined />,
-            content: 'Склад будет удален навсегда',
-            okText: 'Удалить',
-            okType: 'danger',
-            cancelText: 'Отмена',
-            onOk: () => this.props.deleteWarehouse(id),
-            onCancel() {
-            },
-        })
-    );
-
     onDeleteRecord = (id) => {
         this.props.deleteRecord(
             id,
+            `${routes.warehouse}${this.state.warehouseId}`
+        );
+    };
+
+    onUpdate = (id, formValues) => {
+        this.props.editRecord(
+            id,
+            mapUpdatedFormValues(formValues),
+            `${routes.warehouse}${this.state.warehouseId}`
+        );
+    };
+
+    onChange = (formValues, status) => {
+        this.props.createRecord(
+            mapOnChangeFormValues(formValues, status),
             `${routes.warehouse}${this.state.warehouseId}`
         );
     };
@@ -57,6 +54,9 @@ class Warehouse extends Component {
                 <RecordList
                     records={products}
                     deleteRecord={this.onDeleteRecord}
+                    updateRecord={this.onUpdate}
+                    onChange={this.onChange}
+                    title="Список готовой продукции"
                 />
             )
         }
@@ -72,7 +72,10 @@ class Warehouse extends Component {
                 <RecordList
                     records={materials}
                     deleteRecord={this.onDeleteRecord}
+                    updateRecord={this.onUpdate}
+                    title="Список сырья"
                 />
+
             )
         }
     };
@@ -89,13 +92,6 @@ class Warehouse extends Component {
                     {this.renderProducts()}
                     {this.renderMaterials()}
                 </WarehouseCard>
-                <Button
-                    type="primary"
-                    danger
-                    onClick={this.showDeleteConfirm.bind(null, warehouse)}
-                >
-                    Удалить
-                </Button>
             </Fragment>
         );
     }
@@ -112,4 +108,6 @@ export default connect(mapStateToProps, {
     deleteWarehouse,
     fetchRecordList,
     deleteRecord,
+    editRecord,
+    createRecord
 })(Warehouse);

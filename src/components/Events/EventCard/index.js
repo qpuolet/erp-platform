@@ -25,7 +25,7 @@ export default class EventCard extends Component {
     );
 
     render() {
-        const { title, dateTime, id } = this.props.event;
+        const { title, id } = this.props.event;
         return (
             <Card
                 type="inner"

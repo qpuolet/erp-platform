@@ -9,6 +9,7 @@ import usersReducer from './usersReducer';
 import warehousesReducer from './warehousesReducer';
 import productionsReducer from './productionsReducer';
 import recordsReducer from './recordsReducer';
+import taskReducer from "./taskReducer";
 
 export default combineReducers({
     auth: authReducer,
@@ -20,4 +21,6 @@ export default combineReducers({
     warehouses: warehousesReducer,
     productions: productionsReducer,
     records: recordsReducer,
+    tasks: taskReducer,
+    createdTasks: taskReducer,
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 
-class EventForm extends React.Component {
+class LogInForm extends React.Component {
     static defaultProps = {
         initialValues: {
             title: '',
@@ -38,9 +38,7 @@ class EventForm extends React.Component {
 
     onSubmit = (formValues, errors) => {
         this.props.onSubmit({
-            ...formValues,
-            dateTime: Date.now(),
-            userId: '5ea69840caa19161df7412fe',
+            ...formValues
         });
     };
 
@@ -82,6 +80,6 @@ const validate = formValues => {
 };
 
 export default reduxForm({
-    form: 'EventForm',
+    form: 'LogInForm',
     validate,
-})(EventForm);
+})(LogInForm);

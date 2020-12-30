@@ -4,8 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 class ProductionForm extends React.Component {
     static defaultProps = {
       initialValues: {
-          title: '',
-          packing: '',
+          title: ''
       },
     };
 
@@ -30,23 +29,13 @@ class ProductionForm extends React.Component {
         );
     };
 
-    /*
-    ***
-     TO DO change fake userId
-    ***
-     */
-
     onSubmit = (formValues, errors) => {
-        this.props.onSubmit({
-            ...formValues,
-            dateTime: Date.now(),
-            userId: '5ea69840caa19161df7412fe',
-        });
+        this.props.onSubmit(formValues);
     };
 
     render() {
         const { handleSubmit } = this.props;
-        const { name, title, place, quantity, comment } = this.props.initialValues;
+        const { title} = this.props.initialValues;
 
         return (
             <form
@@ -56,7 +45,7 @@ class ProductionForm extends React.Component {
                 <Field
                     name="title"
                     component={this.renderInput}
-                    label="Enter Title"
+                    label="Введите название"
                     value={title}
                 />
                 <button className="ui button primary">Submit</button>
@@ -69,12 +58,8 @@ const validate = formValues => {
     const errors = {};
 
     if(!formValues.title) {
-        errors.title = 'This title has no character';
+        errors.title = 'Название не может быть пустым';
     }
-    if (!formValues.packing) {
-        errors.packing = 'This packing has no character';
-    }
-
     return errors;
 };
 

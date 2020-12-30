@@ -1,12 +1,12 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import {mapFormValues} from "../../../reducers/skuReducer";
 
-class EventForm extends React.Component {
+class UserForm extends React.Component {
     static defaultProps = {
       initialValues: {
-          title: '',
-          packing: '',
+          username: '',
+          email: '',
+          roles: '',
       },
     };
 
@@ -31,22 +31,14 @@ class EventForm extends React.Component {
         );
     };
 
-    /*
-    ***
-     TO DO change fake userId
-    ***
-     */
-
     onSubmit = (formValues, errors) => {
-        this.props.onSubmit({
-            ...formValues,
-            userId: '5ea69840caa19161df7412fe',
-        });
+        console.log("i m clicked", formValues);
+        this.props.onSubmit(formValues);
     };
 
     render() {
         const { handleSubmit } = this.props;
-        const { name, email, password } = this.props.initialValues;
+        const { username, email, roles} = this.props.initialValues;
 
         return (
             <form
@@ -57,7 +49,7 @@ class EventForm extends React.Component {
                     name="username"
                     component={this.renderInput}
                     label="Введите ваше имя"
-                    value={name}
+                    value={username}
                 />
                 <Field
                     name="email"
@@ -69,7 +61,12 @@ class EventForm extends React.Component {
                     name="password"
                     component={this.renderInput}
                     label="Введите пароль"
-                    value={password}
+                />
+                <Field
+                    name="roles"
+                    component={this.renderInput}
+                    label="Скопируйте и вставте через запятую без пробела необходимые роли для пользователя: ROLE_USER, ROLE_MODERATOR, ROLE_ADMIN"
+                    value={roles}
                 />
                 <button className="ui button primary">Submit</button>
             </form>
@@ -77,20 +74,6 @@ class EventForm extends React.Component {
     }
 }
 
-const validate = formValues => {
-    const errors = {};
-
-    if(!formValues.title) {
-        errors.title = 'This title has no character';
-    }
-    if (!formValues.packing) {
-        errors.packing = 'This packing has no character';
-    }
-
-    return errors;
-};
-
 export default reduxForm({
-    form: 'EventForm',
-    validate,
-})(EventForm);
+    form: 'UserForm',
+})(UserForm);

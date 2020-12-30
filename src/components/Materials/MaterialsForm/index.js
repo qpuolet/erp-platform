@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 
-class SkuForm extends React.Component {
+class MaterialForm extends React.Component {
     static defaultProps = {
       initialValues: {
           title: '',
@@ -46,13 +46,13 @@ class SkuForm extends React.Component {
                 <Field
                     name="title"
                     component={this.renderInput}
-                    label="Enter Title"
+                    label="Введите наименование"
                     value={title}
                 />
                 <Field
                     name="packing"
                     component={this.renderInput}
-                    label="Enter Packing"
+                    label="Ведите варианты фасовки"
                     value={packing}
                     type="number"
                 />
@@ -66,16 +66,16 @@ const validate = formValues => {
     const errors = {};
 
     if(!formValues.title) {
-        errors.title = 'This title has no character';
+        errors.title = 'Наименование не может быть пустым';
     }
     if (!formValues.packing) {
-        errors.packing = 'This packing has no character';
+        errors.packing = 'Варианты упаковки не могут быть пустыми';
     }
 
     return errors;
 };
 
 export default reduxForm({
-    form: 'SkuForm',
+    form: 'MaterialForm',
     validate,
-})(SkuForm);
+})(MaterialForm);

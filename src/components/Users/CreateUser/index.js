@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { createUser } from '../../../actions/users';
-import { mapFormValues } from '../../../reducers/usersReducer';
+import {mapRestrictedFormValues} from '../../../reducers/usersReducer';
 import UserForm from '../UserForm';
 
 class CreateUser extends React.Component {
@@ -13,7 +13,7 @@ class CreateUser extends React.Component {
     };
 
     onSubmit = (formValues, errors) => {
-        this.props.createUser(mapFormValues(formValues));
+        this.props.createUser(mapRestrictedFormValues(formValues));
     };
 
     render() {

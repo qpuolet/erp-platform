@@ -1,17 +1,15 @@
 import React, { Component, Fragment } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { Timeline, Button, Modal } from 'antd';
 
 import ProductionCard from '../ProductionCard';
 import RecordList from '../../Records/RecordList';
 import { fetchProduction, deleteProduction } from '../../../actions/productions';
-import { deleteRecord, fetchRecordList } from '../../../actions/records';
-import { getProducts, getMaterials } from '../../../reducers/recordsReducer';
+import { deleteRecord, fetchRecordList, editRecord, createRecord } from '../../../actions/records';
+import {getProducts, getMaterials, mapOnChangeFormValues} from '../../../reducers/recordsReducer';
 import { getProductionItems } from '../../../reducers/productionsReducer';
 import routes from '../../../constants/routes';
 import './Productions.scss';
+import {mapUpdatedFormValues} from "../../../reducers/recordsReducer";
 
 class Production extends Component {
 
@@ -27,27 +25,25 @@ class Production extends Component {
         this.props.fetchRecordList(`?productionId=${this.state.productionId}`);
     }
 
-    showDeleteConfirm = ({ id, title }) => (
-        Modal.confirm({
-            title: `Удалить производство ${'\u00AB'}${title}${'\u00BB'}`,
-            icon: <ExclamationCircleOutlined />,
-            content: 'Производство будет удалено навсегда',
-            okText: 'Удалить',
-            okType: 'danger',
-            cancelText: 'Отмена',
-            onOk: () => this.props.deleteProduction(id),
-            onCancel() {
-            },
-        })
-    );
-
     onDeleteRecord = (id) => {
         this.props.deleteRecord(
             id,
             `${routes.production}${this.state.productionId}`
         );
     };
-
+    onUpdate = (id, formValues) => {
+        this.props.editRecord(
+            id,
+            mapUpdatedFormValues(formValues),
+            `${routes.production}${this.state.productionId}`
+        );
+    };
+    onChange = (formValues, status) => {
+        this.props.createRecord(
+            mapOnChangeFormValues(formValues, status),
+            `${routes.production}${this.state.productionId}`
+        );
+    };
     renderProducts = () => {
         const { products } = this.props;
 
@@ -57,6 +53,9 @@ class Production extends Component {
                 <RecordList
                     records={products}
                     deleteRecord={this.onDeleteRecord}
+                    updateRecord={this.onUpdate}
+                    onChange={this.onChange}
+                    title="Список готовой продукции"
                 />
             )
         }
@@ -72,6 +71,8 @@ class Production extends Component {
                 <RecordList
                     records={materials}
                     deleteRecord={this.onDeleteRecord}
+                    updateRecord={this.onUpdate}
+                    title="Список сырья"
                 />
             )
         }
@@ -89,13 +90,6 @@ class Production extends Component {
                     {this.renderProducts()}
                     {this.renderMaterials()}
                 </ProductionCard>
-                <Button
-                    type="primary"
-                    danger
-                    onClick={this.showDeleteConfirm.bind(null, production)}
-                >
-                    Удалить
-                </Button>
             </Fragment>
         );
     }
@@ -114,4 +108,6 @@ export default connect(mapStateToProps, {
     deleteProduction,
     fetchRecordList,
     deleteRecord,
+    editRecord,
+    createRecord,
 })(Production);

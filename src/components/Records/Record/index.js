@@ -6,7 +6,6 @@ import { Card } from 'antd';
 
 
 import { fetchRecordList, deleteRecord } from '../../../actions/records';
-import RecordCard from '../RecordCard';
 
 class Record extends Component {
 

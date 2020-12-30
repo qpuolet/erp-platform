@@ -30,3 +30,12 @@ export default (state = {}, action) => {
 export const mapFormValues = formValues => {
     return formValues;
 };
+
+export const mapRestrictedFormValues = ({ username, email,  roles = '', password }) => {
+    return {
+        username,
+        email,
+        roles: roles.split(','),
+        password
+    }
+};

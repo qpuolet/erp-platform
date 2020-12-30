@@ -7,6 +7,14 @@ import {
 } from '../actions/products';
 import { omit } from 'lodash';
 
+export const mapFormValues = ({ title, packing = '', rawMaterialId }) => {
+    return {
+        title,
+        packing: packing.split(','),
+        rawMaterialId
+    }
+};
+
 export default (state = {}, action) => {
     switch (action.type) {
         case FETCH_PRODUCT_LIST:

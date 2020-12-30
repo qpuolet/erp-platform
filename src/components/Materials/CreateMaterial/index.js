@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { createMaterial } from '../../../actions/materials';
 import { mapFormValues } from '../../../reducers/skuReducer';
-import CreateSku from '../../Skus/CreateSku';
+import MaterialForm from "../MaterialsForm";
 
 class CreateMaterial extends React.Component {
 
@@ -18,10 +18,12 @@ class CreateMaterial extends React.Component {
 
     render() {
         return (
-            <CreateSku
-                header="Добавить новое сырьё"
-                onSubmit={this.onSubmit}
-            />
+            <div>
+                <h3>"Добавить новое сырьё"</h3>
+                <MaterialForm
+                    onSubmit={this.onSubmit}
+                />
+            </div>
         );
     }
 }
